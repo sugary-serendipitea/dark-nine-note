@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>闇の９マスノート</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <div>
+          <p class="kicker">Nine Squares in the Dark</p>
+          <h1>闇の９マスノート</h1>
+          <p class="intro-text">暗がりの中で、光るものだけ拾う。心に浮かんだ言葉を９つのマスに置いて、その先をそっとのぞいてみる。</p>
+        </div>
+        <div class="actions" aria-label="操作">
+          <button id="expandButton" class="primary-button" type="button" lang="en">Expand</button>
+          <button id="saveFileButton" class="quiet-button" type="button" lang="en">Save</button>
+          <button id="openFileButton" class="quiet-button" type="button" lang="en">Open</button>
+          <button id="resetButton" class="quiet-button" type="button" lang="en">Reset</button>
+          <input id="openFileInput" class="file-input" type="file" accept="application/json,.json" />
+        </div>
+      </header>
+
+      <section class="workspace" aria-label="マンダラワークスペース">
+        <p id="statusText" class="status-text" role="status"></p>
+        <div id="mandalaField" class="mandala-field mandala-field--collapsed">
+          <section class="mandala-panel core-panel" data-position="center" aria-label="中心の9マス">
+            <div class="panel-label">入口</div>
+            <div id="coreGrid" class="mandala-grid mandala-grid--large"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <template id="cellTemplate">
+      <label class="cell">
+        <span class="sr-only"></span>
+        <textarea rows="2" spellcheck="false"></textarea>
+      </label>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
