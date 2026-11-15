@@ -2,15 +2,12 @@
   color-scheme: dark;
   --ink: #efe7d6;
   --muted: #b9aa94;
-  --paper: #15110f;
   --paper-deep: rgba(29, 25, 31, 0.62);
   --cell-ink: #f2eadb;
   --line: rgba(209, 185, 130, 0.3);
   --line-strong: rgba(209, 185, 130, 0.48);
   --accent: #7bb8a6;
-  --accent-ink: #ffffff;
   --crystal: #b9ebdc;
-  --plum: #5d415c;
   --shadow: 0 22px 70px rgba(0, 0, 0, 0.38);
 }
 
@@ -24,7 +21,6 @@ html {
     radial-gradient(circle at 14% 18%, rgba(123, 184, 166, 0.18), transparent 28%),
     radial-gradient(circle at 86% 76%, rgba(124, 73, 108, 0.24), transparent 34%),
     linear-gradient(135deg, #100d0d 0%, #201716 45%, #15120f 100%);
-  background-size: 28px 28px;
 }
 
 body {
@@ -65,8 +61,13 @@ body::after {
 }
 
 button,
+input,
 textarea {
   font: inherit;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 .app {
@@ -75,13 +76,27 @@ textarea {
   padding: 28px 0 48px;
 }
 
+/* ---------- 上の帯 ---------- */
+
 .topbar {
   display: flex;
-  align-items: end;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 18px;
   margin-bottom: 18px;
   padding: 0 4px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-logo {
+  flex: none;
+  width: 44px;
+  height: 44px;
 }
 
 .kicker {
@@ -95,8 +110,15 @@ h1 {
   margin: 0;
   font-size: clamp(1.55rem, 2.5vw, 2.25rem);
   font-weight: 650;
-  letter-spacing: 0;
   text-shadow: 0 2px 22px rgba(123, 184, 166, 0.2);
+}
+
+.intro-text {
+  max-width: 31em;
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
 .actions {
@@ -115,45 +137,30 @@ button {
   border: 1px solid rgba(209, 185, 130, 0.56);
   border-radius: 8px;
   padding: 0 15px;
+  color: #f1e6d3;
   cursor: pointer;
   transition:
     transform 160ms ease,
     box-shadow 160ms ease,
-    background 160ms ease;
-}
-
-button:hover {
-  transform: translateY(-1px);
+    background 160ms ease,
+    border-color 160ms ease;
 }
 
 button:focus-visible,
+input:focus-visible,
 textarea:focus-visible {
   outline: 3px solid rgba(123, 184, 166, 0.34);
   outline-offset: 2px;
 }
 
-.primary-button {
-  border-color: var(--accent);
-  background: linear-gradient(135deg, #518b7c, #7bb8a6);
-  color: var(--accent-ink);
-  box-shadow: 0 12px 24px rgba(37, 102, 88, 0.32);
-}
-
 .quiet-button {
   background: rgba(34, 27, 25, 0.74);
-  color: #f1e6d3;
 }
 
-.workspace {
-  position: relative;
-}
-
-.intro-text {
-  max-width: 31em;
-  margin: 10px 0 0;
-  color: var(--muted);
-  font-size: 0.95rem;
-  line-height: 1.6;
+@media (hover: hover) and (pointer: fine) {
+  .quiet-button:hover {
+    transform: translateY(-1px);
+  }
 }
 
 .status-text {
@@ -168,144 +175,181 @@ textarea:focus-visible {
   margin-bottom: 12px;
 }
 
-.mandala-field {
-  display: grid;
-  gap: 14px;
-  align-items: center;
-  padding: clamp(8px, 1.5vw, 22px);
-  border: 1px solid rgba(209, 185, 130, 0.3);
-  border-radius: 8px;
-  background: rgba(31, 29, 32, 0.46);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
-  backdrop-filter: blur(3px);
+/* ---------- 入口：テーマと9マス ---------- */
+
+/* ガラスの土台：うしろの洞窟がぼんやり透ける。上のふちだけ少し光る */
+.entry {
+  width: min(100%, 720px);
+  margin: 0 auto;
+  padding: clamp(12px, 2vw, 22px);
+  border: 1px solid rgba(232, 222, 200, 0.16);
+  border-radius: 14px;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.01) 45%, rgba(185, 235, 220, 0.03)),
+    rgba(28, 25, 30, 0.24);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+    0 18px 48px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(8px) saturate(1.15);
+  -webkit-backdrop-filter: blur(8px) saturate(1.15);
 }
 
-.mandala-field--collapsed {
-  width: min(100%, 606px);
-  margin-inline: auto;
-  place-items: center;
+.theme {
+  display: block;
+  margin-bottom: 12px;
 }
 
-.mandala-field--expanded {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-areas:
-    "outer-0 outer-1 outer-2"
-    "outer-3 center  outer-4"
-    "outer-5 outer-6 outer-7";
-}
-
-.mandala-panel {
-  position: relative;
-  min-width: 0;
-}
-
-.core-panel {
-  grid-area: center;
-  width: min(100%, 560px);
-  justify-self: center;
-}
-
-.outer-panel {
-  width: 100%;
-}
-
-.outer-panel[data-position="0"] {
-  grid-area: outer-0;
-}
-
-.outer-panel[data-position="1"] {
-  grid-area: outer-1;
-}
-
-.outer-panel[data-position="2"] {
-  grid-area: outer-2;
-}
-
-.outer-panel[data-position="3"] {
-  grid-area: outer-3;
-}
-
-.outer-panel[data-position="4"] {
-  grid-area: outer-4;
-}
-
-.outer-panel[data-position="5"] {
-  grid-area: outer-5;
-}
-
-.outer-panel[data-position="6"] {
-  grid-area: outer-6;
-}
-
-.outer-panel[data-position="7"] {
-  grid-area: outer-7;
-}
-
-.panel-label {
-  display: inline-flex;
-  align-items: center;
-  height: 24px;
+.theme-label {
+  display: block;
   margin: 0 0 6px 2px;
   color: var(--muted);
   font-size: 0.78rem;
 }
 
-.mandala-grid {
+/* テーマ枠：元の明るいベージュのまま、少し透かして上に光を入れる */
+.theme-input {
+  width: 100%;
+  min-height: 52px;
+  border: 1px solid rgba(255, 246, 222, 0.55);
+  border-radius: 10px;
+  padding: 10px 16px;
+  background:
+    linear-gradient(175deg, rgba(255, 252, 240, 0.42), rgba(255, 252, 240, 0) 55%),
+    rgba(222, 209, 182, 0.66);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 rgba(120, 100, 70, 0.18),
+    0 6px 18px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #242128;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.theme-input::placeholder {
+  color: rgba(36, 33, 40, 0.45);
+  font-weight: 400;
+}
+
+.theme-input:focus {
+  background:
+    linear-gradient(175deg, rgba(255, 252, 240, 0.5), rgba(255, 252, 240, 0) 55%),
+    rgba(226, 214, 188, 0.74);
+}
+
+.entry-grid-wrap {
   position: relative;
+}
+
+.entry-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  aspect-ratio: 1;
-  overflow: hidden;
-  border: 1px solid rgba(209, 185, 130, 0.42);
-  border-radius: 8px;
-  background: rgba(13, 11, 14, 0.18);
-  box-shadow: var(--shadow);
-}
-
-.mandala-grid--large {
-  max-width: 560px;
-}
-
-.outer-panel .mandala-grid {
-  box-shadow: 0 12px 38px rgba(0, 0, 0, 0.25);
+  gap: 8px;
 }
 
 .cell {
   position: relative;
+  display: block;
   min-width: 0;
-  min-height: 0;
-  border-right: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  background: var(--paper-deep);
+  min-height: 72px;
+  border: 1px solid rgba(232, 222, 200, 0.14);
+  border-radius: 10px;
+  background:
+    linear-gradient(165deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.01) 55%),
+    rgba(20, 18, 23, 0.42);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 8px 22px rgba(0, 0, 0, 0.22);
 }
 
-.cell:nth-child(3n) {
-  border-right: 0;
+.cell textarea {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 70px;
+  resize: none;
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: transparent;
+  color: var(--cell-ink);
+  line-height: 1.45;
+  text-align: center;
 }
 
-.cell:nth-child(n + 7) {
-  border-bottom: 0;
+.cell textarea:focus {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ✨のあとも空いているマス：書けば潜れるようになる */
+.cell--waiting {
+  border-style: dashed;
+  background: rgba(29, 25, 31, 0.32);
+}
+
+.cell-word {
+  width: 100%;
+  padding: 10px 22px;
+  color: var(--cell-ink);
+  line-height: 1.45;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .cell::after {
-    position: absolute;
-    inset: 1px 1px 0;
-    content: "";
-    pointer-events: none;
-    border-radius: 3px;
-    box-shadow: inset 0 0 0 1px rgba(164, 214, 199, 0.48),
-      inset 0 2px 7px rgba(164, 214, 199, 0.12),
-      0 2px 3px rgba(0, 0, 0, 0.34);
-    opacity: 0;
-    transition: opacity 130ms ease, transform 130ms ease;
-  }
-
-  .cell:hover::after {
-    z-index: 1;
-    opacity: 1;
+  .cell-word:hover {
+    border-color: rgba(164, 214, 199, 0.6);
     transform: translateY(-1px);
   }
+}
+
+.cell-word[aria-expanded="true"] {
+  border-color: var(--accent);
+  background: rgba(58, 74, 70, 0.7);
+  box-shadow: inset 0 0 0 1px rgba(123, 184, 166, 0.6), 0 8px 22px rgba(0, 0, 0, 0.22);
+}
+
+/* 潜って書いた跡：右端にひっそり */
+.dive-mark {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  color: var(--crystal);
+  font-size: 0.9rem;
+  line-height: 1;
+  opacity: 0.55;
+  transform: translateY(-50%);
+}
+
+.entry-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.entry-hint {
+  margin: 0 2px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.ok-button {
+  flex: none;
+  margin-left: auto;
+}
+
+/* ---------- ✨（v4のキラキラをそのまま） ---------- */
+
+.sparkle-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
 
 .completion-sparkles {
@@ -339,13 +383,225 @@ textarea:focus-visible {
   100% { opacity: 0; transform: translateY(-5px); }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .cell::after {
-    transition: none;
-  }
+/* ---------- 潜る ---------- */
 
-  .cell:hover::after {
-    transform: none;
+.dive-lead {
+  margin: 22px 0 14px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* PC：9マスと同じ並び。位置は app.js が grid-column / grid-row で決める */
+.dive-field {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  align-items: start;
+}
+
+.dive-panel {
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid rgba(232, 222, 200, 0.16);
+  border-radius: 14px;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.015) 45%, rgba(185, 235, 220, 0.04)),
+    rgba(28, 25, 30, 0.38);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 18px 48px rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(14px) saturate(1.15);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+}
+
+.dive-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.dive-word {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  padding: 4px 2px;
+  background: transparent;
+  color: var(--ink);
+  font-size: 1.05rem;
+  font-weight: 650;
+}
+
+.dive-word:focus {
+  border-bottom-color: var(--line-strong);
+}
+
+.dive-word::placeholder {
+  color: rgba(239, 231, 214, 0.35);
+  font-weight: 400;
+}
+
+.dive-count {
+  flex: none;
+  border-radius: 999px;
+  padding: 2px 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+/* ---------- 「≡」メニュー ---------- */
+
+.menu-wrap {
+  position: relative;
+  flex: none;
+}
+
+.menu-button {
+  display: inline-grid;
+  place-items: center;
+  min-width: 36px;
+  min-height: 36px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--muted);
+}
+
+.menu-button svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 1.6;
+}
+
+.menu-button--main {
+  min-width: 42px;
+  min-height: 42px;
+}
+
+.menu-button--main svg {
+  width: 24px;
+  height: 24px;
+}
+
+.menu-button[aria-expanded="true"] {
+  color: var(--ink);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .menu-button:hover {
+    color: var(--ink);
+  }
+}
+
+.menu {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + 4px);
+  right: 0;
+  display: grid;
+  min-width: 128px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 4px;
+  background: rgba(24, 20, 22, 0.96);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+}
+
+.menu-item {
+  min-height: 36px;
+  border: 0;
+  border-radius: 6px;
+  padding: 0 12px;
+  background: transparent;
+  color: var(--ink);
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.menu-item:hover,
+.menu-item:focus-visible {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.dive-rows {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+}
+
+.dive-row {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.row-number {
+  flex: none;
+  width: 1.6em;
+  color: var(--muted);
+  font-size: 0.75rem;
+  text-align: right;
+}
+
+.row-input {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 12px;
+  background:
+    linear-gradient(165deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.01) 55%),
+    rgba(20, 18, 23, 0.4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  color: var(--cell-ink);
+}
+
+.row-input:focus {
+  background:
+    linear-gradient(165deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03) 55%),
+    rgba(30, 28, 33, 0.45);
+}
+
+.dive-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.dive-step {
+  min-width: 40px;
+  min-height: 36px;
+  border: 0;
+  padding: 0 10px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.dive-remove {
+  margin-left: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .dive-step:hover {
+    color: var(--ink);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button {
+    transition: none;
   }
 
   .completion-sparkles {
@@ -353,75 +609,21 @@ textarea:focus-visible {
   }
 }
 
-.cell textarea {
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  resize: none;
-  border: 0;
-  border-radius: 0;
-  padding: clamp(8px, 1.2vw, 14px);
-  background: transparent;
-  color: var(--cell-ink);
-  line-height: 1.45;
-}
+/* ---------- スマホ・せまい画面 ---------- */
 
-.cell textarea::placeholder {
-  color: rgba(242, 234, 219, 0.28);
-}
-
-.core-panel .cell textarea:focus {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.core-panel .cell--center {
-  background: rgba(211, 198, 171, 0.78);
-}
-
-.core-panel .cell--center textarea {
-  color: #242128;
-}
-
-.core-panel .cell--center textarea:focus {
-  background: rgba(255, 255, 255, 0.16);
-}
-
-.cell--seed {
-  background: rgba(47, 45, 47, 0.62);
-  box-shadow: inset 0 0 0 1px rgba(151, 201, 185, 0.5);
-}
-
-.cell--seed textarea:focus {
-  background: transparent;
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-}
-
-@media (max-width: 1050px) {
-  .app {
-    width: min(900px, calc(100% - 24px));
-  }
-
-  .mandala-field--expanded {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-areas:
-      "center center"
-      "outer-0 outer-1"
-      "outer-2 outer-3"
-      "outer-4 outer-5"
-      "outer-6 outer-7";
-    align-items: start;
+@media (max-width: 760px) {
+  .dive-field {
+    display: flex;
+    flex-direction: column;
   }
 }
 
 @media (max-width: 680px) {
+  /* 縦長の画面では、横長の絵の右側（クリスタルのあたり）を見せる */
+  body::before {
+    background-position: 0 0, 92% center;
+  }
+
   .app {
     width: min(100% - 18px, 520px);
     padding-top: 18px;
@@ -432,28 +634,52 @@ textarea:focus-visible {
     flex-direction: column;
   }
 
+  .topbar {
+    position: relative;
+  }
+
+  .brand {
+    gap: 10px;
+  }
+
+  .brand-logo {
+    width: 34px;
+    height: 34px;
+  }
+
   .actions {
-    justify-content: start;
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 
-  button {
-    flex: 1 1 98px;
-    padding: 0 10px;
+  .entry-grid {
+    gap: 6px;
   }
 
-  .mandala-field--expanded {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .core-panel,
-  .outer-panel {
-    width: 100%;
-  }
-
+  .cell,
   .cell textarea {
+    min-height: 60px;
+  }
+
+  .cell textarea,
+  .cell-word {
+    padding: 8px 6px;
     font-size: 0.86rem;
     line-height: 1.36;
-    padding: 8px;
+  }
+
+  .cell-word {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .dive-mark {
+    right: 5px;
+    font-size: 0.8rem;
+  }
+
+  .entry-foot {
+    align-items: flex-start;
   }
 }

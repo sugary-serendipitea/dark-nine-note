@@ -4,42 +4,60 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>闇の９マスノート</title>
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="app">
       <header class="topbar">
         <div>
-          <p class="kicker">Nine Squares in the Dark</p>
-          <h1>闇の９マスノート</h1>
-          <p class="intro-text">暗がりの中で、光るものだけ拾う。心に浮かんだ言葉を９つのマスに置いて、その先をそっとのぞいてみる。</p>
+          <div class="brand">
+            <img class="brand-logo" src="assets/logo.svg" alt="" width="40" height="40" />
+            <div>
+              <p class="kicker">Nine Squares in the Dark</p>
+              <h1>闇の９マスノート</h1>
+            </div>
+          </div>
+          <p class="intro-text">暗がりの中で、光るものだけ拾う。心に浮かんだ言葉を９つのマスに置いて、気になるところへそっと潜ってみる。</p>
         </div>
-        <div class="actions" aria-label="操作">
-          <button id="expandButton" class="primary-button" type="button" lang="en">Expand</button>
-          <button id="saveFileButton" class="quiet-button" type="button" lang="en">Save</button>
-          <button id="openFileButton" class="quiet-button" type="button" lang="en">Open</button>
-          <button id="resetButton" class="quiet-button" type="button" lang="en">Reset</button>
+        <div class="actions menu-wrap">
+          <button id="mainMenuButton" class="menu-button menu-button--main" type="button" aria-label="メニュー" aria-expanded="false" aria-controls="mainMenu">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 6h12M4 10h12M4 14h12" /></svg>
+          </button>
+          <div id="mainMenu" class="menu" hidden>
+            <button id="copyAllButton" class="menu-item" type="button" lang="en" aria-label="Copy（ノート全体をテキストでコピー）">Copy</button>
+            <button id="saveFileButton" class="menu-item" type="button" lang="en">Save</button>
+            <button id="openFileButton" class="menu-item" type="button" lang="en">Open</button>
+            <button id="resetButton" class="menu-item" type="button" lang="en">Reset</button>
+          </div>
           <input id="openFileInput" class="file-input" type="file" accept="application/json,.json" />
         </div>
       </header>
 
-      <section class="workspace" aria-label="マンダラワークスペース">
+      <section class="workspace" aria-label="9マスノートの作業スペース">
         <p id="statusText" class="status-text" role="status"></p>
-        <div id="mandalaField" class="mandala-field mandala-field--collapsed">
-          <section class="mandala-panel core-panel" data-position="center" aria-label="中心の9マス">
-            <div class="panel-label">入口</div>
-            <div id="coreGrid" class="mandala-grid mandala-grid--large"></div>
-          </section>
+
+        <div class="entry">
+          <label class="theme">
+            <span class="theme-label">テーマ</span>
+            <input id="themeInput" class="theme-input" type="text" placeholder="いま気になっていること" autocomplete="off" spellcheck="false" maxlength="2000" />
+          </label>
+
+          <div class="entry-grid-wrap">
+            <div id="entryGrid" class="entry-grid" aria-label="9マス"></div>
+            <div id="sparkleLayer" class="sparkle-layer" aria-hidden="true"></div>
+          </div>
+
+          <div class="entry-foot">
+            <p id="entryHint" class="entry-hint"></p>
+            <button id="okButton" class="quiet-button ok-button" type="button">これでOK</button>
+          </div>
         </div>
+
+        <p id="diveLead" class="dive-lead" hidden>↓ 選んだ思考の中へ潜る</p>
+        <div id="diveField" class="dive-field"></div>
       </section>
     </main>
-
-    <template id="cellTemplate">
-      <label class="cell">
-        <span class="sr-only"></span>
-        <textarea rows="2" spellcheck="false"></textarea>
-      </label>
-    </template>
 
     <script src="app.js"></script>
   </body>

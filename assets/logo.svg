@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- 案3：9つの小さなマス。まん中の1つだけが、ひし形の結晶になって光る -->
+  <defs>
+    <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e3f8ef"/>
+      <stop offset="1" stop-color="#7bb8a6"/>
+    </linearGradient>
+  </defs>
+  <g fill="#efe7d6" fill-opacity="0.55">
+    <rect x="8" y="8" width="12" height="12" rx="2.5"/>
+    <rect x="26" y="8" width="12" height="12" rx="2.5"/>
+    <rect x="44" y="8" width="12" height="12" rx="2.5"/>
+    <rect x="8" y="26" width="12" height="12" rx="2.5"/>
+    <rect x="44" y="26" width="12" height="12" rx="2.5"/>
+    <rect x="8" y="44" width="12" height="12" rx="2.5"/>
+    <rect x="26" y="44" width="12" height="12" rx="2.5"/>
+    <rect x="44" y="44" width="12" height="12" rx="2.5"/>
+  </g>
+  <path d="M32 21 L42 32 L32 43 L22 32 Z" fill="url(#g3)"/>
+  <path d="M22 32 H42 M32 21 L28 32 L32 43" fill="none" stroke="#ffffff" stroke-opacity="0.5" stroke-width="1.1"/>
+</svg>
