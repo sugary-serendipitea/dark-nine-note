@@ -599,6 +599,31 @@ textarea:focus-visible {
   }
 }
 
+/* ---------- いちばん下の署名 ---------- */
+
+.site-footer {
+  margin-top: 40px;
+  color: rgba(185, 170, 148, 0.75);
+  font-size: 0.78rem;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.site-footer a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(185, 170, 148, 0.4);
+  text-underline-offset: 3px;
+}
+
+.site-footer a:hover {
+  color: var(--ink);
+}
+
 @media (prefers-reduced-motion: reduce) {
   button {
     transition: none;
